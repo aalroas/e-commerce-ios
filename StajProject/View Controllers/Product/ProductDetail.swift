@@ -7,15 +7,13 @@
 
 import Foundation
 
-struct Product {
+struct ProductDetail {
     var id: Int
     var title: String
+    var image: String
     var price: Double
-    var description : String
-    var category : String
-    var image : String
-    var liked : Int
+    var category: String
+    var description: String
 }
-
 
 
