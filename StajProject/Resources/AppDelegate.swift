@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  StajProject
 //
-//  Created by Burj Almaha on 27.02.2022.
+//  Created by Abdulsalam ALROAS
 //
 
 import UIKit
@@ -11,11 +11,47 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
-
+    // for ios <  13 to  make StoryBoard Work
+    var window: UIWindow?
+    
+    static var standard: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+ 
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        // if user is logged in before
+        if let loggedAccessToken = UserDefaults.standard.accessToken {
+            let home = storyboard.instantiateViewController(withIdentifier: "home")
+            self.window?.rootViewController = home
+        } else {
+            let login = storyboard.instantiateViewController(withIdentifier: "login")
+            self.window?.rootViewController = login
+        }
+        
         return true
     }
+    
+
+    func changeRootViewController(_ vc: UIViewController, animated: Bool = true) {
+        guard let window = self.window else {
+            return
+        }
+
+        window.rootViewController = vc
+
+        // add animation
+        UIView.transition(with: window,
+                          duration: 0.5,
+                          options: [.transitionFlipFromLeft],
+                          animations: nil,
+                          completion: nil)
+
+    }
+    
 
     // MARK: UISceneSession Lifecycle
 
